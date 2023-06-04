@@ -89,19 +89,95 @@
 
   <script>
     let form = document.querySelector('form');
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      let output = document.querySelector('output');
-      let firstNum = document.querySelector('#first-num').value;
-      let secondNum = document.querySelector('#second-num').value;
-      let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
-    });
+    form.addEventListener('submit', e => receiveForm(e));
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+    errorBtns[0].addEventListener('click', () => {
+      console.log('This is the console log function.');
+    });
+
+    errorBtns[1].addEventListener('click', () => {
+      console.error('This is the console error function.');
+    });
+
+    errorBtns[2].addEventListener('click', () => {
+      console.count('Numbers console count called');
+    });
+
+    errorBtns[3].addEventListener('click', () => {
+      console.warn('This is a warning function.');
+    });
+
+    errorBtns[4].addEventListener('click', () => {
+      console.assert(errorBtns === NaN, 'This is an assert function');
+    });
+
+    errorBtns[5].addEventListener('click', () => {
+      console.clear();
+    });
+
+    errorBtns[6].addEventListener('click', () => {
+      console.dir(errorBtns[6]);
+    });
+
+    errorBtns[7].addEventListener('click', () => {
+      console.dirxml(errorBtns);
+    });
+
+    errorBtns[8].addEventListener('click', () => {
+      console.log('This is the start of console group.');
+      console.group();
+    });
+
+    errorBtns[9].addEventListener('click', () => {
+      console.log('This is the end of console group.');
+      console.groupEnd();
+    });
+
+    errorBtns[10].addEventListener('click', () => {
+      console.table(errorBtns);
+    });
+
+    errorBtns[11].addEventListener('click', () => {
+      console.log('The timer starts.');
+      console.time('timer');
+    });
+
+    errorBtns[12].addEventListener('click', () => {
+      console.log('The timer ends.');
+      console.timeEnd('timer');
+    });
+
+    errorBtns[13].addEventListener('click', firstTrace);
+
+    function firstTrace() {
+      function secondTrace(){
+        console.trace();
+      }
+      secondTrace();
+    }
+
+    function receiveForm (e) {
+      try {
+        e.preventDefault();
+        let output = document.querySelector('output');
+        let firstNum = document.querySelector('#first-num').value;
+        let secondNum = document.querySelector('#second-num').value;
+        let operator = document.querySelector('#operator').value;
+        if (typeof JSON.parse(firstNum) != 'number' || typeof JSON.parse(secondNum) != 'number') {
+          throw new Error('Must enter numbers as inputs.');
+        }
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      } catch (err) {
+        alert("External catch got: " + err);
+      } finally {
+        console.log('Finished form processing.');
+      }
+    }
+
   </script>
 </body>
 
